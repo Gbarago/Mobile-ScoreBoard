@@ -7,29 +7,36 @@ class PlayerScores extends StatefulWidget {
 
 class _PlayerScoresState extends State<PlayerScores> {
   int _finalScore = 100;
-  var winningText = '';
+//var check ;
+
+  var _winningText = '';
   int _totalScoreP2 = 0;
-  void _increasedScoreP2() {
-    if (_totalScoreP2 == _finalScore) {
+  int _totalScoreP1 = 0;
+
+  void _increasedScoreP1() {
+    if (_totalScoreP2 < _finalScore && _totalScoreP1 < _finalScore) {
       setState(() {
-        _finalScore = 100;
-        winningText = 'player 2 wins';
-        _totalScoreP2 = _totalScoreP2;
+        _totalScoreP1 = _totalScoreP1 + 10;
       });
     } else {
       setState(() {
-        _totalScoreP2 = _totalScoreP2 + 10;
+        _winningText = 'player 1 wins';
+        _totalScoreP1 = _totalScoreP1;
+        // _totalScoreP2 = _totalScoreP2;
       });
     }
   }
 
-  int _totalScoreP1 = 0;
-  void _increasedScoreP1() {
-    if (_totalScoreP2 == _finalScore) {
-      _totalScoreP1 = _totalScoreP1;
+  void _increasedScoreP2() {
+    if (_totalScoreP1 != _finalScore && _totalScoreP2 < _finalScore) {
+      setState(() {
+        _totalScoreP2 = _totalScoreP2 + 10;
+      });
     } else {
       setState(() {
-        _totalScoreP1 = _totalScoreP1 + 10;
+        _winningText = 'player 2 wins';
+        _totalScoreP2 = _totalScoreP2;
+        //  _totalScoreP1 = _totalScoreP1;
       });
     }
   }
@@ -38,7 +45,7 @@ class _PlayerScoresState extends State<PlayerScores> {
     setState(() {
       _totalScoreP1 = 0;
       _totalScoreP2 = 0;
-      winningText = '';
+      _winningText = '';
     });
   }
 
@@ -47,7 +54,7 @@ class _PlayerScoresState extends State<PlayerScores> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(winningText),
+        Text(_winningText),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
